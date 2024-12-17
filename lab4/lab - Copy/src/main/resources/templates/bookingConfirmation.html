@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Booking - Confirmation</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+<body>
+<section class="container mt-5">
+    <header class="text-center mb-4">
+        <h1>Event Booking - Confirmation</h1>
+    </header>
+
+    <th:block th:if="${error}">
+        <div class="alert alert-danger text-center">
+            <h2>We don't have that many tickets available</h2>
+        </div>
+    </th:block>
+
+    <th:block th:if="${not error}">
+        <table class="table table-bordered">
+            <thead class="thead-dark">
+            <tr>
+                <th colspan="2" class="text-center">Your Booking Status</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td><strong>Attendee Name</strong></td>
+                <td th:text="${booking.attendeeName}"></td>
+            </tr>
+            <tr>
+                <td><strong>Client IP Address</strong></td>
+                <td th:text="${booking.attendeeAddress}"></td>
+            </tr>
+            <tr>
+                <td><strong>Booking for Event</strong></td>
+                <td th:text="${booking.eventName}"></td>
+            </tr>
+            <tr>
+                <td><strong>Number of Tickets</strong></td>
+                <td th:text="${booking.numberOfTickets}"></td>
+            </tr>
+            </tbody>
+        </table>
+    </th:block>
+</section>
+
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJt7LD5p8CIEXSUhp4Q1DkPdLMGPOzGXp69m9F4jmnMCfm7/+" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy9Vb+8CJEq5k1iITkxgYOk87W3GKNF8lPrK8kt" crossorigin="anonymous"></script>
+</body>
+</html>

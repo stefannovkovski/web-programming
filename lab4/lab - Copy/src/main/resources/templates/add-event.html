@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Add New Event</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+<body>
+<div class="container mt-5">
+    <h2>Add New Event</h2>
+    <!-- Main Event Form -->
+    <form action="/events/add" method="post">
+        <input id="id" type="hidden" name="id"
+               th:value="(${event} != null ? ${event.getId()} : '')">
+
+        <!-- Event Name -->
+        <div class="form-group">
+            <label for="name">Event Name</label>
+            <input type="text" th:value="(${event} != null ? ${event.getName()} : '')" id="name" name="name" class="form-control" placeholder="Enter event name" required>
+        </div>
+
+        <!-- Event Description -->
+        <div class="form-group">
+            <label for="description">Event Description</label>
+            <input type="text" th:value="(${event} != null ? ${event.getDescription()} : '')" id="description" name="description" class="form-control" placeholder="Enter event description">
+        </div>
+
+        <!-- Event Popularity Score -->
+        <div class="form-group">
+            <label for="popularityScore">Popularity Score</label>
+            <input type="number" th:value="(${event} != null ? ${event.getPopularityScore()} : '' )" id="popularityScore" name="popularityScore" class="form-control" placeholder="Enter popularity score" th:required="${event} == null" th:readonly="${event} != null">
+        </div>
+
+        <!-- Number of Tickets -->
+        <div class="form-group">
+            <label for="numberOftickets">Number of Tickets</label>
+            <input type="number" id="numberOftickets" th:value="(${event} != null ? ${event.getNumTickets()} : '' )" name="numberOftickets" class="form-control" placeholder="Enter number of tickets" th:required="${event} == null" th:readonly="${event} != null">
+        </div>
+
+        <!-- Location Selection -->
+        <div class="form-group">
+            <label for="location">Location</label>
+            <select id="location" name="locationId" class="form-control" required>
+                <option value="" disabled selected>Select a location</option>
+                <option th:if="${event} != null"
+                        th:selected="${event.getLocation() != null && event.getLocation().getId() == loc.getId()}"
+                        th:each="loc : ${locations}"
+                        th:value="${loc.getId()}"
+                        th:text="${loc.getName()}">
+                </option>
+                <option th:if="${event} == null"
+                        th:each="loc:${locations}"
+                        th:value="${loc.getId()}"
+                        th:text="${loc.getName()}">
+                </option>
+            </select>
+        </div>
+
+        <!-- Submit Event Button -->
+        <button type="submit" class="btn btn-primary">Add Event</button>
+    </form>
+
+    <!-- Comment Form -->
+    <form action="/events/comment" method="post" class="form-group mt-4">
+        <input type="hidden" name="id" th:if="${event != null}" th:value="${event.id}">
+        <label for="comment">Comment</label>
+        <input type="text" id="comment" name="comment" placeholder="Enter your comment" required class="form-control" />
+        <button type="submit" class="btn btn-secondary mt-2">Submit Comment</button>
+    </form>
+
+    <!-- Display Comments -->
+    <div class="form-group mt-4" th:if="${event != null}">
+        <label>User Comments</label>
+        <div th:each="com : ${event.getComments()}">
+            <p><strong th:text="${com.userName}">User Name</strong>: <span th:text="${com.comment}">User Comment</span></p>
+        </div>
+    </div>
+</div>
+</body>
+</html>
